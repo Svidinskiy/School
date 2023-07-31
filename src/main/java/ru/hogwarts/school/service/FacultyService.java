@@ -1,48 +1,45 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class FacultyService {
-    private Map<Long, Faculty> faculties = new HashMap<>();
-    private Long idCounter = 1L;
+
+    private final FacultyRepository facultyRepository;
+
+    @Autowired
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     public void createFaculty(String name, String color) {
-        Faculty faculty = new Faculty(idCounter, name, color);
-        faculties.put(idCounter, faculty);
-        idCounter++;
+        Faculty faculty = new Faculty(null, name, color);
+        facultyRepository.save(faculty);
     }
 
     public Faculty getFacultyById(Long id) {
-        return faculties.get(id);
+        return facultyRepository.findById(id).orElse(null);
     }
 
     public void updateFaculty(Long id, String name, String color) {
-        Faculty faculty = faculties.get(id);
+        Faculty faculty = facultyRepository.findById(id).orElse(null);
         if (faculty != null) {
             faculty.setName(name);
             faculty.setColor(color);
-            faculties.put(id, faculty);
+            facultyRepository.save(faculty);
         }
     }
 
     public void deleteFaculty(Long id) {
-        faculties.remove(id);
+        facultyRepository.deleteById(id);
     }
 
     public List<Faculty> filterFacultiesByColor(String color) {
-        List<Faculty> filteredFaculties = new ArrayList<>();
-        for (Faculty faculty : faculties.values()) {
-            if (faculty.getColor().equalsIgnoreCase(color)) {
-                filteredFaculties.add(faculty);
-            }
-        }
-        return filteredFaculties;
+        return facultyRepository.findByColorIgnoreCase(color);
     }
 }
