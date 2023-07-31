@@ -17,8 +17,7 @@ public class FacultyService {
         this.facultyRepository = facultyRepository;
     }
 
-    public void createFaculty(String name, String color) {
-        Faculty faculty = new Faculty(null, name, color);
+    public void createFaculty(Faculty faculty) {
         facultyRepository.save(faculty);
     }
 
@@ -26,11 +25,11 @@ public class FacultyService {
         return facultyRepository.findById(id).orElse(null);
     }
 
-    public void updateFaculty(Long id, String name, String color) {
+    public void updateFaculty(Long id, Faculty updatedFaculty) {
         Faculty faculty = facultyRepository.findById(id).orElse(null);
         if (faculty != null) {
-            faculty.setName(name);
-            faculty.setColor(color);
+            faculty.setName(updatedFaculty.getName());
+            faculty.setColor(updatedFaculty.getColor());
             facultyRepository.save(faculty);
         }
     }

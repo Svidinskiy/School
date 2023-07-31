@@ -16,8 +16,8 @@ public class FacultyController {
     }
 
     @PostMapping
-    public void createFaculty(@RequestParam String name, @RequestParam String color) {
-        facultyService.createFaculty(name, color);
+    public void createFaculty(@RequestBody Faculty faculty) {
+        facultyService.createFaculty(faculty);
     }
 
     @GetMapping("/{id}")
@@ -26,8 +26,8 @@ public class FacultyController {
     }
 
     @PutMapping("/{id}")
-    public void updateFaculty(@PathVariable Long id, @RequestParam String name, @RequestParam String color) {
-        facultyService.updateFaculty(id, name, color);
+    public void updateFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {
+        facultyService.updateFaculty(id, faculty);
     }
 
     @DeleteMapping("/{id}")
