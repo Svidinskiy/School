@@ -16,8 +16,7 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public void createStudent(String name, int age) {
-        Student student = new Student(null, name, age);
+    public void createStudent(Student student) {
         studentRepository.save(student);
     }
 
@@ -26,11 +25,11 @@ public class StudentService {
         return studentRepository.findById(id).orElse(null);
     }
 
-    public void updateStudent(Long id, String name, int age) {
+    public void updateStudent(Long id, Student updatedStudent) {
         Student student = studentRepository.findById(id).orElse(null);
         if (student != null) {
-            student.setName(name);
-            student.setAge(age);
+            student.setName(updatedStudent.getName());
+            student.setAge(updatedStudent.getAge());
             studentRepository.save(student);
         }
     }
