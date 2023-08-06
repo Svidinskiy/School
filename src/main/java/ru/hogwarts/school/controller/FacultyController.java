@@ -2,8 +2,10 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -38,5 +40,20 @@ public class FacultyController {
     @GetMapping("/filterByColor")
     public List<Faculty> filterFacultiesByColor(@RequestParam String color) {
         return facultyService.filterFacultiesByColor(color);
+    }
+
+    @GetMapping("/filterByName")
+    public List<Faculty> filterFacultiesByName(@RequestParam String name) {
+        return facultyService.filterFacultiesByName(name);
+    }
+
+    @GetMapping("/{facultyId}/students")
+    public List<Student> getStudentsByFaculty(@PathVariable Long facultyId) {
+        Faculty faculty = facultyService.getFacultyById(facultyId);
+        if (faculty != null) {
+            return faculty.getStudents();
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
