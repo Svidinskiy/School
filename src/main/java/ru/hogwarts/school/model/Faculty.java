@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.OneToMany;
 
@@ -26,6 +27,7 @@ public class Faculty {
         this.id = id;
         this.name = name;
         this.color = color;
+        this.students = new ArrayList<>();
     }
 
     public List<Student> getStudents() {
@@ -59,4 +61,10 @@ public class Faculty {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+
 }
