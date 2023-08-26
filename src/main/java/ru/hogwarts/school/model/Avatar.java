@@ -1,5 +1,7 @@
 package ru.hogwarts.school.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Avatar {
     private String mediaType;
 
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] data;
 
     @OneToOne
