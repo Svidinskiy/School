@@ -10,9 +10,14 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
+
     private String name;
+
     private int age;
+
+
 
     @ManyToOne
     @JoinColumn(name = "faculty_id")
@@ -60,8 +65,15 @@ public class Student {
         this.age = age;
     }
 
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
     @Override
     public String toString() {
         return "Student [id=" + id + ", name=" + name + ", age=" + age + "]";
     }
+
+
+
 }
