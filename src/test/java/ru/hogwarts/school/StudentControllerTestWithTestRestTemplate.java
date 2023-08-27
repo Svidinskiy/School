@@ -100,4 +100,22 @@ public class StudentControllerTestWithTestRestTemplate {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
     }
+
+    @Test
+    public void testCountAllStudents() {
+        ResponseEntity<Long> response = restTemplate.getForEntity(getBaseUrl() + "/countAllStudents", Long.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testGetAverageStudentAge() {
+        ResponseEntity<Double> response = restTemplate.getForEntity(getBaseUrl()+ "/averageStudentAge", Double.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testFindTop5Students() {
+        ResponseEntity<String> response = restTemplate.getForEntity(getBaseUrl()+ "/top5Students", String.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 }
