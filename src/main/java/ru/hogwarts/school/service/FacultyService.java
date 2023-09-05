@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -71,5 +72,16 @@ public class FacultyService {
             logger.warn("Факультет с ID: " + facultyId + " не найден");
             return Collections.emptyList();
         }
+    }
+
+    public String getFacultyWithLongestName() {
+        List<Faculty> allFaculties = facultyRepository.findAll();
+
+        String longestName = allFaculties.stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElse("");
+
+        return longestName;
     }
 }

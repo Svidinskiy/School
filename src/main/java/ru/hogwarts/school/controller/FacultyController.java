@@ -3,9 +3,11 @@ package ru.hogwarts.school.controller;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -56,4 +58,10 @@ public class FacultyController {
             return Collections.emptyList();
         }
     }
+
+    @GetMapping("/longestName")
+    public String getFacultyWithLongestName() {
+        return facultyService.getFacultyWithLongestName();
+    }
+
 }

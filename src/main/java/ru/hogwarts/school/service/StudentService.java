@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -73,5 +75,34 @@ public class StudentService {
     public List<Student> findTop5Students() {
         logger.info("Вызван метод для получения 5-ти последних студентов");
         return studentRepository.findTop5ByOrderByIdDesc();
+    }
+
+    public List<String> getStudentNamesStarting() {
+        List<Student> allStudents = studentRepository.findAll();
+
+        List<String> namesStarting = allStudents.stream()
+                .map(Student::getName)
+                .filter(name -> name.startsWith("Г"))
+                .sorted()
+                .collect(Collectors.toList());
+
+        return namesStarting;
+    }
+
+    public double getAverageStudentAgeStream() {
+        List<Student> allStudents = studentRepository.findAll();
+
+        double averageAge = allStudents.stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0);
+
+        return averageAge;
+    }
+
+    public long calculateSum() {
+        long n = 1_000_000;
+        long sum = n * (n + 1) / 2;
+        return sum;
     }
 }
