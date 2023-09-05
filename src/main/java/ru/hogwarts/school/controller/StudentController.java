@@ -8,6 +8,8 @@ import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/student")
@@ -73,6 +75,22 @@ public class StudentController {
     public List<Student> findTop5Students() {
         return studentService.findTop5Students();
     }
+
+    @GetMapping("/namesStarting")
+    public List<String> getStudentNamesStarting() {
+        return studentService.getStudentNamesStarting();
+    }
+
+    @GetMapping("/averageAge")
+    public double getAverageStudentAgeStream() {
+        return studentService.getAverageStudentAgeStream();
+    }
+
+    @GetMapping("/calculateSum")
+    public long calculateSum() {
+        return studentService.calculateSum();
+    }
+
 
 
 }
