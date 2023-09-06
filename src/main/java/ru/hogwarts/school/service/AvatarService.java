@@ -8,19 +8,20 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class AvatarService {
 
     private final AvatarRepository avatarRepository;
     private static final String UPLOAD_DIR = "C:/path/to/upload/directory/";
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     @Autowired
     public AvatarService(AvatarRepository avatarRepository) {
@@ -29,6 +30,7 @@ public class AvatarService {
 
 
     public void uploadAvatar(MultipartFile file, Long studentId) throws IOException {
+        logger.info("Вызван метод для загрузки аватара для студента с ID");
         Optional<Avatar> optionalAvatar = avatarRepository.findByStudentId(studentId);
         Student student = new Student();
         student.setId(studentId);
@@ -49,6 +51,7 @@ public class AvatarService {
         String fileName = file.getOriginalFilename();
         Path filePath = path.resolve(fileName);
         Files.write(filePath, file.getBytes());
+        logger.debug("Загружен аватар для студента с ID: " + studentId);
     }
 
 
@@ -56,22 +59,27 @@ public class AvatarService {
         Optional<Avatar> avatarOptional = avatarRepository.findByStudentId(studentId);
         if (avatarOptional.isPresent()) {
             Avatar avatar = avatarOptional.get();
+            logger.info("Вызван метод для получения аватара студента с ID: " + studentId);
             return avatar.getData();
         } else {
-            throw new IllegalArgumentException("Avatar not found");
+            logger.warn("Аватар не найден для студента с ID: " + studentId);
+            throw new IllegalArgumentException("Аватар не найден");
         }
     }
 
     public byte[] getAvatarImage(Long avatarId) throws IOException {
         Optional<Avatar> optionalAvatar = avatarRepository.findById(avatarId);
         if (optionalAvatar.isPresent()) {
+            logger.info("Вызван метод для получения аватара с ID: " + avatarId);
             return optionalAvatar.get().getData();
         } else {
-            throw new IllegalArgumentException("Avatar not found");
+            logger.warn("Аватар не найден с ID: " + avatarId);
+            throw new IllegalArgumentException("Аватар не найден");
         }
     }
 
     public Page<Avatar> findAllBy(Pageable pageable) {
+        logger.info("Вызван метод для получения страницы аватаров");
         return avatarRepository.findAllBy(pageable);
     }
 }
