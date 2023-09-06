@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 @Service
@@ -101,8 +102,7 @@ public class StudentService {
     }
 
     public long calculateSum() {
-        long n = 1_000_000;
-        long sum = n * (n + 1) / 2;
+        long sum = LongStream.rangeClosed(1, 1_000_000).parallel().reduce(0, Long::sum);
         return sum;
     }
 }
