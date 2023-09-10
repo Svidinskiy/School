@@ -91,6 +91,14 @@ public class StudentController {
         return studentService.calculateSum();
     }
 
+    @GetMapping("/printStudentNames")
+    public void printStudentNames() {
+        studentService.printStudentNames();
+    }
 
+    @GetMapping("/printStudentNamesSync")
+    public void printStudentNamesSync() {
+        studentService.printStudentNamesSync();
+    }
 
 }
